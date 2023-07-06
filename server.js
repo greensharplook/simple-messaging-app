@@ -6,7 +6,9 @@ let messages = ['testing'];
 let clients = [];
 
 http.createServer((req, res) => {
-	res.end('Test!!!');
+	fs.readFile('./index.html', (err, data) => {
+		res.end(data);
+	});
 }).listen(8080, 'localhost');
 
 console.log('Server running...');
