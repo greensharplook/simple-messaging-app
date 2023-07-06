@@ -32,6 +32,17 @@ http.createServer((req, res) => {
 			clients.push(res);
 		}
 
+	} else if (url_parts.pathname.substr(0, 5) === '/msg/') {
+		let msg = unescape(url_parts.pathname.substr(5));
+		messages.push(msg);
+		while (clients.length > 0) {
+			let client = clients.pop();
+			client.end(JSON.stringify({
+				counter: messages.length,
+				append: msg + '\n'
+			}));
+		}
+
 	} else {
 		res.end();
 	}
